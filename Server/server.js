@@ -7,6 +7,8 @@ const transactionsRoute = require("./routes/transactions/transactionRoutes");
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/v1/user", usersRoute);
 
 app.use("/api/v1/account", accountsRoute);
