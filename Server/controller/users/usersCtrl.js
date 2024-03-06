@@ -29,7 +29,24 @@ const registerUserCtrl = async (req, res) => {
 
 const loginUserCtrl = async (req, res) => {
   try {
-    res.json({ msg: "Login Route" });
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.json({ message: "Please fill all the details" });
+    }
+    const userFound = await User.findOne({ email });
+    if (!userFound) {
+      return res.json({ message: "Invalid credentials" });
+    }
+    const isPasswordMatch = await bcrypt.compare(password, userFound.password);
+    if (!isPasswordMatch) {
+      return res.json({ message: "Invaid credentials" });
+    }
+
+    res.json({
+      status: "Success",
+      fullname: userFound.fullname,
+      id: userFound._id,
+    });
   } catch (error) {
     res.json(error);
   }
