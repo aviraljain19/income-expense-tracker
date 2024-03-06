@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const User = require("../../model/User");
 const appErr = require("../../utils/AppErr");
 const generateToken = require("../../utils/generateToken");
-const verifyToken = require("../../utils/verigyToken");
 
 const registerUserCtrl = async (req, res, next) => {
   const { fullname, password, email } = req.body;
@@ -55,12 +54,9 @@ const loginUserCtrl = async (req, res, next) => {
 };
 
 const userProfileCtrl = async (req, res) => {
-  const result = verifyToken(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTg5YWZmMTc3YzA3Y2JhMDIyMWRlNSIsImlhdCI6MTcwOTc1MzMxOSwiZXhwIjoxNzA5ODM5NzE5fQ.WIO63li2UGWNz38xWLFtem3rSXrJmGipYebny5dOyEs"
-  );
-  console.log(result);
   try {
-    res.json({ msg: "Profile Route" });
+    const user = await User.findById(req.user);
+    res.json(user);
   } catch (error) {
     res.json(error);
   }
