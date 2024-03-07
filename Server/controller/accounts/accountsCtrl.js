@@ -25,11 +25,13 @@ const createAccountCtrl = async (req, res, next) => {
   }
 };
 
-const getAccountCtrl = async (req, res) => {
+const getAccountCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Get single account route" });
+    const id = req.params.id;
+    const account = await Account.findById(id).populate("transaction");
+    res.json({ status: "success", data: account });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 };
 
