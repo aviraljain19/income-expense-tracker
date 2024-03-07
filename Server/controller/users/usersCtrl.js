@@ -76,11 +76,43 @@ const deleteUserCtrl = async (req, res) => {
   }
 };
 
-const updateUserCtrl = async (req, res) => {
+const updateUserCtrl = async (req, res, next) => {
   try {
-    res.json({ msg: "Update user Route" });
+    if (req.body.email) {
+      const userFound = await User.findOne({ email: req.body.email });
+      if (userFound) return next(appErr("Email is taken", 404));
+    }
+
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      const user = await User.findByIdAndUpdate(
+        req.user,
+        {
+          password: hashedPassword,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      return res.status(200).json({
+        staus: "success",
+        data: user,
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(req.user, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      staus: "success",
+      data: user,
+    });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 };
 

@@ -18,6 +18,6 @@ usersRoute.get("/profile", isLogin, userProfileCtrl);
 
 usersRoute.delete("/:id", deleteUserCtrl);
 
-usersRoute.put("/:id", updateUserCtrl);
+usersRoute.put("/", isLogin, updateUserCtrl);
 
 module.exports = usersRoute;
