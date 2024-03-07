@@ -68,11 +68,15 @@ const userProfileCtrl = async (req, res) => {
   }
 };
 
-const deleteUserCtrl = async (req, res) => {
+const deleteUserCtrl = async (req, res, next) => {
   try {
-    res.json({ msg: "Delete Route" });
+    await User.findByIdAndDelete(req.user);
+    res.status(200).json({
+      status: "Success",
+      data: null,
+    });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 };
 

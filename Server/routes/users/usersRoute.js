@@ -16,7 +16,7 @@ usersRoute.post("/login", loginUserCtrl);
 
 usersRoute.get("/profile", isLogin, userProfileCtrl);
 
-usersRoute.delete("/:id", deleteUserCtrl);
+usersRoute.delete("/", isLogin, deleteUserCtrl);
 
 usersRoute.put("/", isLogin, updateUserCtrl);
 
