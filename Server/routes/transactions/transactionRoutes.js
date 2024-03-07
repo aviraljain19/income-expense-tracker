@@ -6,10 +6,11 @@ const {
   deleteTransactionCtrl,
   updateTransactionCtrl,
 } = require("../../controller/transactions/transactionsCtrl");
+const isLogin = require("../../middlewares/isLoggedIn");
 
 const transactionsRoute = express.Router();
 
-transactionsRoute.post("/", createTransactionCtrl);
+transactionsRoute.post("/", isLogin, createTransactionCtrl);
 
 transactionsRoute.get("/", getTransactionCtrl);
 

@@ -29,7 +29,7 @@ const transactionSchema = new mongoose.Schema(
         "Personal",
         "Groceries",
         "Bills",
-        "Uncategorizrd",
+        "Uncategorized",
       ],
       required: true,
     },
@@ -40,6 +40,7 @@ const transactionSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     date: {
       type: Date,
