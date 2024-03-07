@@ -34,7 +34,8 @@ const createTransactionCtrl = async (req, res, next) => {
 
 const getTransactionCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Get transaction route" });
+    const transaction = await Transaction.find();
+    res.json({ status: "success", data: transaction });
   } catch (error) {
     next(appErr(error.message, 500));
   }
@@ -42,7 +43,8 @@ const getTransactionCtrl = async (req, res, next) => {
 
 const getSingleTransactionCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Get single transaction route" });
+    const transaction = await Transaction.findById(req.params.id);
+    res.json({ status: "success", data: transaction });
   } catch (error) {
     next(appErr(error.message, 500));
   }
@@ -50,7 +52,8 @@ const getSingleTransactionCtrl = async (req, res, next) => {
 
 const deleteTransactionCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Delete transaction route" });
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ status: "success", data: null });
   } catch (error) {
     next(appErr(error.message, 500));
   }
@@ -58,7 +61,15 @@ const deleteTransactionCtrl = async (req, res, next) => {
 
 const updateTransactionCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Update transaction route" });
+    const transaction = await Transaction.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.json({ status: "success", data: transaction });
   } catch (error) {
     next(appErr(error.message, 500));
   }
