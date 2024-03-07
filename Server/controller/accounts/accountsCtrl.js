@@ -1,8 +1,27 @@
-const createAccountCtrl = async (req, res) => {
+const Account = require("../../model/Account");
+const User = require("../../model/User");
+const appErr = require("../../utils/AppErr");
+
+const createAccountCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Create account route" });
+    const { name, initialBalance, accountType, notes } = req.body;
+    const userFound = await User.findById(req.user);
+    if (!userFound) {
+      return next(appErr("User not found", 404));
+    }
+    const account = await Account.create({
+      name,
+      initialBalance,
+      accountType,
+      notes,
+      createdBy: req.user,
+    });
+    userFound.accounts.push(account._id);
+    userFound.hasCreatedAccount = true;
+    await userFound.save();
+    res.json({ status: "success", data: account });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 };
 
