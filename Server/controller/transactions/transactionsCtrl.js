@@ -28,39 +28,39 @@ const createTransactionCtrl = async (req, res, next) => {
     await accountFound.save();
     res.json({ status: "success", data: transaction });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
-const getTransactionCtrl = async (req, res) => {
+const getTransactionCtrl = async (req, res, next) => {
   try {
     res.json({ message: "Get transaction route" });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
-const getSingleTransactionCtrl = async (req, res) => {
+const getSingleTransactionCtrl = async (req, res, next) => {
   try {
     res.json({ message: "Get single transaction route" });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
-const deleteTransactionCtrl = async (req, res) => {
+const deleteTransactionCtrl = async (req, res, next) => {
   try {
     res.json({ message: "Delete transaction route" });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
-const updateTransactionCtrl = async (req, res) => {
+const updateTransactionCtrl = async (req, res, next) => {
   try {
     res.json({ message: "Update transaction route" });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 

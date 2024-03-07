@@ -21,7 +21,7 @@ const createAccountCtrl = async (req, res, next) => {
     await userFound.save();
     res.json({ status: "success", data: account });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
@@ -31,34 +31,40 @@ const getAccountCtrl = async (req, res, next) => {
     const account = await Account.findById(id).populate("transaction");
     res.json({ status: "success", data: account });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
-const getAllAccountCtrl = async (req, res) => {
+const getAllAccountCtrl = async (req, res, next) => {
   try {
     const accounts = await Account.find()
       .populate("transaction")
       .populate("createdBy");
     res.json(accounts);
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
-const deleteAccountCtrl = async (req, res) => {
+const deleteAccountCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Delete account route" });
+    await Account.findByIdAndDelete(req.params.id);
+    res.status(200).json({ status: "Success", data: null });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
-const updateAccountCtrl = async (req, res) => {
+const updateAccountCtrl = async (req, res, next) => {
   try {
-    res.json({ message: "Update account route" });
+    const account = await Account.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({ status: "success", data: account });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 

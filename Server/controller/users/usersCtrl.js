@@ -25,7 +25,7 @@ const registerUserCtrl = async (req, res, next) => {
       id: user._id,
     });
   } catch (error) {
-    next(new Error(error));
+    next(appErr(error.message, 500));
   }
 };
 
@@ -49,11 +49,11 @@ const loginUserCtrl = async (req, res, next) => {
       token: generateToken(userFound._id),
     });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
-const userProfileCtrl = async (req, res) => {
+const userProfileCtrl = async (req, res, next) => {
   try {
     const user = await User.findById(req.user).populate({
       path: "accounts",
@@ -64,7 +64,7 @@ const userProfileCtrl = async (req, res) => {
     });
     res.json(user);
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message, 500));
   }
 };
 
@@ -76,7 +76,7 @@ const deleteUserCtrl = async (req, res, next) => {
       data: null,
     });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
@@ -116,7 +116,7 @@ const updateUserCtrl = async (req, res, next) => {
       data: user,
     });
   } catch (error) {
-    next(appErr(error));
+    next(appErr(error.message, 500));
   }
 };
 
