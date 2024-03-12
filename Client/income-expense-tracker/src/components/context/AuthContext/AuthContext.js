@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-
+import axios from "axios";
 export const authContext = createContext();
 
 const INITIAL_STATE = {
@@ -15,8 +15,25 @@ const reducer = (state, action) => {
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const loginUserAction = () => async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = axios.post(
+        "http://localhost:9000/api/v1/user/login",
+        formData,
+        config
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <authContext.Provider value={{ isLogin: false }}>
+    <authContext.Provider value={{ loginUserAction }}>
       {children}
     </authContext.Provider>
   );
