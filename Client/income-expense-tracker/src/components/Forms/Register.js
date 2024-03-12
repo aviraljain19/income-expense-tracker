@@ -1,28 +1,28 @@
-import { useContext, useState } from "react";
-// import { authContext } from "../context/AuthContext/AuthContext";
-
-const Login = () => {
-  // const { loginUserAction, userAuth } = useContext(authContext);
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+const Register = () => {
   //form data
   const [formData, setFormData] = useState({
+    fullname: "",
     email: "",
     password: "",
   });
-  const { email, password } = formData;
+  //Destructure
+  const { fullname, email, password } = formData;
 
-  //onChnage
+  //onChange
   const onChangeInput = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //submit
+  //Handle submit
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-    //dispatch action
-    //loginUserAction(formData);
+    if (!email || !password || !fullname) {
+      return alert("Please provide all details");
+    }
   };
-  // console.log(userAuth);
+
   return (
     <>
       <section className="py-24 md:py-32 bg-white">
@@ -30,13 +30,8 @@ const Login = () => {
           <div className="max-w-sm mx-auto">
             <div className="mb-6 text-center">
               <h3 className="mb-4 text-2xl md:text-3xl font-bold">
-                Sign in to your account
+                Register for an account
               </h3>
-              <p>
-                {/* {userAuth?.error && (
-                  <span className="text-red-500">{userAuth?.error}</span>
-                )} */}
-              </p>
             </div>
             <form onSubmit={onSubmitHandler}>
               <div className="mb-6">
@@ -47,12 +42,28 @@ const Login = () => {
                   Email
                 </label>
                 <input
-                  onChange={onChangeInput}
                   value={email}
+                  onChange={onChangeInput}
                   name="email"
-                  className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lgshadow-md placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                  className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lg shadow-sm placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
                   type="email"
                   placeholder="i-novotek@gmail.com"
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  className="block mb-2 text-coolGray-800 font-medium"
+                  htmlFor
+                >
+                  Full Name
+                </label>
+                <input
+                  value={fullname}
+                  onChange={onChangeInput}
+                  name="fullname"
+                  className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lg shadow-sm placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                  type="text"
+                  placeholder="I-Nooovotek Academy"
                 />
               </div>
               <div className="mb-4">
@@ -66,37 +77,22 @@ const Login = () => {
                   value={password}
                   onChange={onChangeInput}
                   name="password"
-                  className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lgshadow-md placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                  className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lg shadow-sm placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
                   type="password"
                   placeholder="************"
                 />
               </div>
-              <div className="flex flex-wrap items-center justify-between mb-6">
-                <div className="w-full md:w-1/2">
-                  <label className="relative inline-flex items-center">
-                    <input
-                      className="form-checkbox appearance-none"
-                      type="checkbox"
-                    />
-                  </label>
-                </div>
-              </div>
+              <div className="flex flex-wrap items-center justify-between mb-6"></div>
               <button
                 className="inline-block py-3 px-7 mb-6 w-full text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm"
                 type="submit"
               >
-                Sign In
+                Register
               </button>
               <p className="text-center">
                 <span className="text-xs font-medium">
-                  Don’t have an account?
+                  Already have an account? <Link to="/login">Sign in</Link>
                 </span>
-                <button
-                  className="inline-block text-xs font-medium text-green-500 hover:text-green-600 hover:underline"
-                  type="submit"
-                >
-                  Sign up
-                </button>
               </p>
             </form>
           </div>
@@ -106,4 +102,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
