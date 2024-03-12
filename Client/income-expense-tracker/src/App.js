@@ -1,10 +1,16 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Login from "./components/Forms/Login";
+import HomePage from "./components/HomePage/HomePage";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Income-Expense tracker</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
