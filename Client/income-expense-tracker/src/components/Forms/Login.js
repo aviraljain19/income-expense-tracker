@@ -1,9 +1,24 @@
 import { useContext, useState } from "react";
-import { authContext } from "../context/AuthContext/AuthContext";
 
+import { authContext } from "../context/AuthContext/AuthContext";
 const Login = () => {
   const { loginUserAction } = useContext(authContext);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
+  const { email, password } = formData;
+
+  const onChangeInput = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    loginUserAction(formData);
+  };
   return (
     <>
       <section className="py-24 md:py-32 bg-white">

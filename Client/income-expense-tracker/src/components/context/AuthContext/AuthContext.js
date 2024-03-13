@@ -15,14 +15,14 @@ const reducer = (state, action) => {
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const loginUserAction = () => async (formData) => {
+  const loginUserAction = async (formData) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "http://localhost:9000/api/v1/user/login",
         formData,
         config
