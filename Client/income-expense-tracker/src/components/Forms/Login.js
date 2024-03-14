@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 
 import { authContext } from "../context/AuthContext/AuthContext";
 const Login = () => {
-  const { loginUserAction } = useContext(authContext);
+  const { loginUserAction, userAuth } = useContext(authContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +20,7 @@ const Login = () => {
     console.log(formData);
     loginUserAction(formData);
   };
+  console.log(userAuth);
   return (
     <>
       <section className="py-24 md:py-32 bg-white">
@@ -29,9 +31,9 @@ const Login = () => {
                 Sign in to your account
               </h3>
               <p>
-                {/* {userAuth?.error && (
+                {userAuth?.error && (
                   <span className="text-red-500">{userAuth?.error}</span>
-                )} */}
+                )}
               </p>
             </div>
             <form onSubmit={onSubmitHandler}>

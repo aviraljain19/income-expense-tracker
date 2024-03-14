@@ -10,7 +10,13 @@ const INITIAL_STATE = {
 };
 
 const reducer = (state, action) => {
-  return {};
+  const { type, payload } = action;
+  switch (type) {
+    case "LOGIN_SUCCESS":
+      return { ...state, loading: false, error: null, userAuth: payload };
+    case "LOGIN_FAILED":
+      return { ...state, loading: false, error: payload, userAuth: null };
+  }
 };
 
 const AuthContextProvider = ({ children }) => {
@@ -27,13 +33,23 @@ const AuthContextProvider = ({ children }) => {
         formData,
         config
       );
+      if (res?.data?.status === "Success") {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: res.data,
+        });
+      }
       console.log(res);
     } catch (error) {
       console.log(error);
+      dispatch({
+        type: "LOGIN_FAILED",
+        payload: error?.response?.data?.message,
+      });
     }
   };
   return (
-    <authContext.Provider value={{ loginUserAction }}>
+    <authContext.Provider value={{ loginUserAction, userAuth: state }}>
       {children}
     </authContext.Provider>
   );
