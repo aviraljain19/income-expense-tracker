@@ -1,9 +1,11 @@
 import { createContext, useReducer } from "react";
 import axios from "axios";
+import { LOGIN_FAILED, LOGIN_SUCCESS } from "./authActionTypes";
+
 export const authContext = createContext();
 
 const INITIAL_STATE = {
-  userAuth: null,
+  userAuth: JSON.parse(localStorage.getItem("userAuth")),
   error: null,
   loading: false,
   profile: null,
@@ -12,9 +14,10 @@ const INITIAL_STATE = {
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "LOGIN_SUCCESS":
+    case LOGIN_SUCCESS:
+      localStorage.setItem("userAuth", JSON.stringify(payload));
       return { ...state, loading: false, error: null, userAuth: payload };
-    case "LOGIN_FAILED":
+    case LOGIN_FAILED:
       return { ...state, loading: false, error: payload, userAuth: null };
   }
 };
@@ -35,7 +38,7 @@ const AuthContextProvider = ({ children }) => {
       );
       if (res?.data?.status === "Success") {
         dispatch({
-          type: "LOGIN_SUCCESS",
+          type: LOGIN_SUCCESS,
           payload: res.data,
         });
       }
@@ -43,7 +46,7 @@ const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       dispatch({
-        type: "LOGIN_FAILED",
+        type: LOGIN_FAILED,
         payload: error?.response?.data?.message,
       });
     }
