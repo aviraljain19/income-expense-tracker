@@ -1,6 +1,12 @@
 import { createContext, useReducer } from "react";
 import axios from "axios";
-import { LOGIN_FAILED, LOGIN_SUCCESS } from "./authActionTypes";
+import {
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  FETCH_PROFILE_SUCCESS,
+  FETCH_PROFILE_FAIL,
+} from "./authActionTypes";
+import { API_URL_USER } from "../../../utils/apiUrl";
 
 export const authContext = createContext();
 
@@ -19,6 +25,10 @@ const reducer = (state, action) => {
       return { ...state, loading: false, error: null, userAuth: payload };
     case LOGIN_FAILED:
       return { ...state, loading: false, error: payload, userAuth: null };
+    case FETCH_PROFILE_SUCCESS:
+      return { ...state, loading: false, error: null, profile: payload };
+    case FETCH_PROFILE_FAIL:
+      return { ...state, loading: false, error: payload, profile: null };
   }
 };
 
@@ -31,11 +41,7 @@ const AuthContextProvider = ({ children }) => {
       },
     };
     try {
-      const res = await axios.post(
-        "http://localhost:9000/api/v1/user/login",
-        formData,
-        config
-      );
+      const res = await axios.post(`${API_URL_USER}/login`, formData, config);
       if (res?.data?.status === "Success") {
         dispatch({
           type: LOGIN_SUCCESS,
@@ -51,8 +57,38 @@ const AuthContextProvider = ({ children }) => {
       });
     }
   };
+  const fetchProfileAction = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state?.userAuth?.token}`,
+      },
+    };
+    try {
+      const res = await axios.get(`${API_URL_USER}/profile`, config);
+      if (res?.data) {
+        dispatch({
+          type: FETCH_PROFILE_SUCCESS,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: FETCH_PROFILE_FAIL,
+        payload: error?.response?.data?.message,
+      });
+    }
+  };
   return (
-    <authContext.Provider value={{ loginUserAction, userAuth: state }}>
+    <authContext.Provider
+      value={{
+        loginUserAction,
+        userAuth: state,
+        fetchProfileAction,
+        profile: state?.profile,
+        error: state?.error,
+      }}
+    >
       {children}
     </authContext.Provider>
   );
