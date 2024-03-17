@@ -20,7 +20,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-end justify-between -m-2 mb-2">
                   <div className="w-auto p-2">
                     <h3 className="text-sm text-coolGray-500 font-medium">
-                      Todays revenue
+                      Total income
                     </h3>
                   </div>
                   <div className="w-auto p-2">
@@ -71,7 +71,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-end justify-between -m-2 mb-2">
                   <div className="w-auto p-2">
                     <h3 className="text-sm text-coolGray-500 font-medium">
-                      Todays orders
+                      Total Expenses
                     </h3>
                   </div>
                   <div className="w-auto p-2">
@@ -122,7 +122,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-end justify-between -m-2 mb-2">
                   <div className="w-auto p-2">
                     <h3 className="text-sm text-coolGray-500 font-medium">
-                      Avg. order value
+                      Balance
                     </h3>
                   </div>
                   <div className="w-auto p-2">
