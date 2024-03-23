@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AllTransactions = () => {
+const AllTransactions = ({ transactions }) => {
   const account = {};
   return (
     <>
@@ -65,43 +65,48 @@ const AllTransactions = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {/* loop */}
-                    <tr key={account?.email} className={account?.color}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                        <div className="flex items-center">
-                          <div className="ml-4">
-                            <div className="font-medium text-gray-900">
-                              {account?.name}
+                    {transactions?.map((transaction) => {
+                      return (
+                        <tr key={account?.email} className={account?.color}>
+                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                            <div className="flex items-center">
+                              <div className="ml-4">
+                                <div className="font-medium text-gray-900">
+                                  {transaction?.name}
+                                </div>
+                              </div>
                             </div>
-                            <div className="text-gray-500">Emma</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <div className="text-gray-900">
-                          {account?.transactionType}
-                        </div>
-                        {/* <div className="text-gray-500">
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <div className="text-gray-900">
+                              {transaction?.transactionType}
+                            </div>
+                            {/* <div className="text-gray-500">
                             {account?.department}nn
                           </div> */}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                          $ {account?.amount}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {account?.notes}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit
-                          <span className="sr-only">, {account?.name}</span>
-                        </a>
-                      </td>
-                    </tr>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                              $ {transaction?.amount}
+                            </span>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {transaction?.notes}
+                          </td>
+                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a
+                              href="#"
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              Edit
+                              <span className="sr-only">
+                                {transaction?.name}
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                      );
+                    })}
                     {/* end */}
                   </tbody>
                 </table>
