@@ -1,14 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AllTransactions from "./AllTransactions";
+import { useContext, useEffect } from "react";
+import { accountContext } from "../context/AccountContext/AccountContext";
 
 export default function AccountDetails() {
+  const { getAccountDetailsAction, account } = useContext(accountContext);
+  const { accountID } = useParams();
+  useEffect(() => {
+    getAccountDetailsAction(accountID);
+  }, [accountID]);
   return (
     <>
       <div className="bg-gray-50 pt-12 sm:pt-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Stock Investment
+              {account?.name}
             </h2>
             <p className="mt-3 text-xl text-gray-500 sm:mt-4">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit.
