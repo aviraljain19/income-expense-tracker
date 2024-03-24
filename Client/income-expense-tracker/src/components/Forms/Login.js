@@ -17,10 +17,8 @@ const Login = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formData);
     loginUserAction(formData);
   };
-  console.log(userAuth);
   return (
     <>
       <section className="py-24 md:py-32 bg-white">

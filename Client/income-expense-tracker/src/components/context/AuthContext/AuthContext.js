@@ -5,6 +5,7 @@ import {
   LOGIN_SUCCESS,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAIL,
+  LOGOUT,
 } from "./authActionTypes";
 import { API_URL_USER } from "../../../utils/apiUrl";
 
@@ -29,6 +30,14 @@ const reducer = (state, action) => {
       return { ...state, loading: false, error: null, profile: payload };
     case FETCH_PROFILE_FAIL:
       return { ...state, loading: false, error: payload, profile: null };
+    case LOGOUT:
+      localStorage.removeItem("userAuth");
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        userAuth: null,
+      };
   }
 };
 
@@ -48,7 +57,8 @@ const AuthContextProvider = ({ children }) => {
           payload: res.data,
         });
       }
-      console.log(res);
+
+      window.location.href = "/dashboard";
     } catch (error) {
       console.log(error);
       dispatch({
@@ -79,6 +89,14 @@ const AuthContextProvider = ({ children }) => {
       });
     }
   };
+  const logoutUserAction = () => {
+    dispatch({
+      type: LOGOUT,
+      payload: null,
+    });
+    window.location.href = "/login";
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -87,6 +105,7 @@ const AuthContextProvider = ({ children }) => {
         fetchProfileAction,
         profile: state?.profile,
         error: state?.error,
+        logoutUserAction,
       }}
     >
       {children}

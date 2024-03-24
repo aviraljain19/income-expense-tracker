@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import { authContext } from "../context/AuthContext/AuthContext";
 
 export default function Navbar() {
+  const { logoutUserAction } = useContext(authContext);
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -73,7 +77,10 @@ export default function Navbar() {
                   </>
 
                   <>
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <button
+                      onClick={logoutUserAction}
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
                       Logout
                     </button>
                   </>
@@ -128,7 +135,10 @@ export default function Navbar() {
                 </Link>
               </>
 
-              <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+              <button
+                onClick={logoutUserAction}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
                 Logout
               </button>
             </div>
