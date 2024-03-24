@@ -9,6 +9,20 @@ export default function AccountDetails() {
   useEffect(() => {
     getAccountDetailsAction(accountID);
   }, [accountID]);
+  const totalIncome = account?.transaction?.reduce((acc, transaction) => {
+    if (transaction?.transactionType === "Income") {
+      return acc + transaction?.amount;
+    } else {
+      return acc;
+    }
+  }, 0);
+  const totalExpenses = account?.transaction?.reduce((acc, transaction) => {
+    if (transaction?.transactionType === "Expenses") {
+      return acc + transaction?.amount;
+    } else {
+      return acc;
+    }
+  }, 0);
   return (
     <>
       {account?.transaction?.length <= 0 ? (
@@ -40,15 +54,18 @@ export default function AccountDetails() {
                           Total Balance
                         </dt>
                         <dd className=" text-5xl font-bold tracking-tight text-indigo-600">
-                          4000
+                          {totalIncome +
+                            account?.initialBalance -
+                            totalExpenses}{" "}
+                          Rs.
                         </dd>
                       </div>
                       <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
                         <dt className=" mt-2 text-lg font-medium leading-6 text-gray-500">
                           Total Expenses
                         </dt>
-                        <dd className=" text-5xl font-bold tracking-tight text-indigo-600">
-                          3000
+                        <dd className=" text-5xl font-bold tracking-tight text-red-500">
+                          {totalExpenses} Rs.
                         </dd>
                         <Link
                           to={`/expenses-list/${1}`}
@@ -61,8 +78,8 @@ export default function AccountDetails() {
                         <dt className=" mt-2 text-lg font-medium leading-6 text-gray-500">
                           Total Income
                         </dt>
-                        <dd className=" text-5xl font-bold tracking-tight text-indigo-600">
-                          900
+                        <dd className=" text-5xl font-bold tracking-tight text-green-600">
+                          {totalIncome + account?.initialBalance} Rs.
                         </dd>
                         <Link
                           to={`/income-list/${1}`}
