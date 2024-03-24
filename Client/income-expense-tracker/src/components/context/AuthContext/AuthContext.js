@@ -102,6 +102,7 @@ const AuthContextProvider = ({ children }) => {
       value={{
         loginUserAction,
         userAuth: state,
+        token: state?.userAuth?.token,
         fetchProfileAction,
         profile: state?.profile,
         error: state?.error,

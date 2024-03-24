@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext/AuthContext";
 
 export default function Navbar() {
-  const { logoutUserAction } = useContext(authContext);
+  const { logoutUserAction, token } = useContext(authContext);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -45,45 +45,44 @@ export default function Navbar() {
                   >
                     Home
                   </Link>
-
-                  <>
-                    <Link
-                      to="/add-transaction"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Add Transaction
-                    </Link>
-                    <Link
-                      to="/dashboard"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Dashboard
-                    </Link>
-                  </>
-
-                  <>
-                    <Link
-                      to="/login"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Register
-                    </Link>
-                  </>
-
-                  <>
-                    <button
-                      onClick={logoutUserAction}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Logout
-                    </button>
-                  </>
+                  {token && (
+                    <>
+                      <Link
+                        to="/add-transaction"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Add Transaction
+                      </Link>
+                      <Link
+                        to="/dashboard"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={logoutUserAction}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  )}
+                  {!token && (
+                    <>
+                      <Link
+                        to="/login"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="flex items-center">
@@ -112,35 +111,45 @@ export default function Navbar() {
               >
                 Home
               </Link>
+              {token && (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Dashboard
+                  </Link>
 
-              <Link
-                to="/dashboard"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Dashboard
-              </Link>
-
-              <>
-                <Link
-                  to="/login"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Register
-                </Link>
-              </>
-
-              <button
-                onClick={logoutUserAction}
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Logout
-              </button>
+                  <Link
+                    to="/add-transaction"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Add Transaction
+                  </Link>
+                  <button
+                    onClick={logoutUserAction}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!token && (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </Disclosure.Panel>
         </>
