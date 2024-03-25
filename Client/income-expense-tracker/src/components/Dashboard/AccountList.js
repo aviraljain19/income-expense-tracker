@@ -14,12 +14,12 @@ const AccountList = ({ accounts }) => {
                   You have not created any accounts yet. Click the button below
                   to create one.
                 </p>
-                <a
-                  href="/dashboard/accounts/create"
+                <Link
+                  to="/dashboard/accounts/create"
                   className="px-6 py-3 text-lg font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
                 >
                   Create Account
-                </a>
+                </Link>
               </>
             ) : (
               <>
@@ -32,7 +32,7 @@ const AccountList = ({ accounts }) => {
                     category or in chronological order.
                   </p>
                   <Link
-                    to="/add-account"
+                    to="/dashboard/accounts/create"
                     className="inline-flex m-8 items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
                     <svg

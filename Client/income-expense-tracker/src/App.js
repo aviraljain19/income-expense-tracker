@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import AddTransaction from "./components/Forms/AddTransaction";
 import AccountDashboard from "./components/Dashboard/AccountDashboard";
 import AccountDetails from "./components/Dashboard/AccountDetails";
+import AddAccount from "./components/Forms/AddAccount";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           path="/account-details/:accountID"
           element={<AccountDetails />}
         />
+        <Route path="/dashboard/accounts/create" element={<AddAccount />} />
       </Routes>
     </BrowserRouter>
   );
