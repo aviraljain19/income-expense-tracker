@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PlusIcon } from "@heroicons/react/20/solid";
+
 import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext/AuthContext";
 
@@ -85,20 +85,7 @@ export default function Navbar() {
                   )}
                 </div>
               </div>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Link
-                    to="/dashboard"
-                    className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <PlusIcon
-                      className="-ml-1 mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    <span>New Transaction</span>
-                  </Link>
-                </div>
-              </div>
+              <div className="flex items-center"></div>
             </div>
           </div>
 
